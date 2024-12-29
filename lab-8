@@ -73,6 +73,8 @@ double calculate_path_length(const std::vector<Vertex*>& path) {
 }
 
 // BFS алгоритм
+// Ассимптотика: O(V + E), где V - количество вершин, E - количество рёбер
+// Память: O(V) для хранения посещённых вершин и очереди
 std::vector<Vertex*> breadth_first_search(Network& network, Vertex* start, Vertex* goal) {
     if (!start || !goal) return {};
 
@@ -100,6 +102,8 @@ std::vector<Vertex*> breadth_first_search(Network& network, Vertex* start, Verte
 }
 
 // DFS алгоритм
+// Ассимптотика: O(V + E)
+// Память: O(V) для хранения стека и посещённых вершин
 std::vector<Vertex*> depth_first_search(Network& network, Vertex* start, Vertex* goal) {
     if (!start || !goal) return {};
 
@@ -128,6 +132,8 @@ std::vector<Vertex*> depth_first_search(Network& network, Vertex* start, Vertex*
 }
 
 // Алгоритм Дейкстры
+// Ассимптотика: O((V + E) log V) из-за использования очереди с приоритетом
+// Память: O(V) для расстояний, предыдущих вершин и очереди
 std::vector<Vertex*> dijkstra(Network& network, Vertex* start, Vertex* goal) {
     if (!start || !goal) return {};
 
@@ -175,6 +181,8 @@ double heuristic(Vertex* a, Vertex* b) {
 }
 
 // Алгоритм A*
+// Ассимптотика: O((V + E) log V) с учётом очереди с приоритетом
+// Память: O(V) для хранения оценок, посещённых вершин и очереди
 std::vector<Vertex*> a_star(Network& network, Vertex* start, Vertex* goal) {
     if (!start || !goal) return {};
 
@@ -275,4 +283,5 @@ int main() {
 
     return 0;
 }
+
 
