@@ -61,29 +61,6 @@ struct Network {
     }
 };
 
-// Загрузка графа из файла
-Network load_network(const std::string& filepath) {
-    Network network;
-    std::ifstream file(filepath);
-    std::string line;
-
-    while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        std::string parent, edges;
-        std::getline(ss, parent, ':');
-        double x1, y1;
-        sscanf(parent.c_str(), "%lf,%lf", &x1, &y1);
-
-        while (std::getline(ss, edges, ';')) {
-            double x2, y2, weight;
-            sscanf(edges.c_str(), "%lf,%lf,%lf", &x2, &y2, &weight);
-            network.add_connection(x1, y1, x2, y2, weight);
-        }
-    }
-
-    return network;
-}
-
 // Подсчет длины пути
 double calculate_path_length(const std::vector<Vertex*>& path) {
     double total_length = 0.0;
@@ -247,18 +224,20 @@ void display_path(const std::vector<Vertex*>& path) {
 }
 
 int main() {
-    Network network = load_network("spb_network.txt"); // Загружаем граф
+    Network network;
 
-    double startLon = 30.499879, startLat = 59.936492;
-    double goalLon = 30.307961, goalLat = 59.957246;
+    // Создание тестового графа
+    network.add_connection(0, 0, 1, 0, 1.0);
+    network.add_connection(1, 0, 1, 1, 1.0);
+    network.add_connection(1, 1, 0, 1, 1.0);
+    network.add_connection(0, 1, 0, 0, 1.0);
+    network.add_connection(0, 0, 1, 1, 1.5);
 
-    Vertex* start = network.find_nearest_vertex(startLat, startLon);
-    Vertex* goal = network.find_nearest_vertex(goalLat, goalLon);
+    double start_x = 0, start_y = 0;
+    double goal_x = 1, goal_y = 1;
 
-    if (!start || !goal) {
-        std::cerr << "Ошибка: не удалось найти ближайшие вершины для заданных координат." << std::endl;
-        return 1;
-    }
+    Vertex* start = network.find_nearest_vertex(start_x, start_y);
+    Vertex* goal = network.find_nearest_vertex(goal_x, goal_y);
 
     std::cout << "Сравнение алгоритмов поиска пути:\n";
 
