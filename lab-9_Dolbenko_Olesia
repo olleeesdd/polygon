@@ -1,0 +1,17 @@
+import numpy as np  # Импорт библиотеки Numpy
+# функкция для входных данных
+def process_input(user_input):
+    arr = np.array([int(x) for x in user_input.split()])  # Преобразование ввода в числовой массив
+    unique_elements, counts = np.unique(arr, return_counts=True)  # Получение уникальных элементов и их количества
+
+    # Создание массива с элементами, которые встречаются четное количество раз
+    even_counts_elements = unique_elements[counts % 2 == 0]  # элементы с четным количеством
+    even_counts_repeated = np.repeat(even_counts_elements, counts[counts % 2 == 0])  # Повторение этих элементов
+
+    print(np.array2string(even_counts_repeated, separator=', '))  # Вывод результата
+
+# Тест
+test_input = "1 2 2 3 3 3 4 4 4 4" # ввод пример
+process_input(test_input)  # Вызов функции с тестом
+
+#выполняла задание "Найти все числа, которые встречаются в массиве чётное количество раз.	Если число встречается четное количество раз - оно подходит, если нечетное - не подходит"
